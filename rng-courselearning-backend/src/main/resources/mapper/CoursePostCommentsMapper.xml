@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.post.CoursePostCommentsMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.post.CoursePostComment">
+        <result column="postuid" jdbcType="INTEGER" property="postuid" />
+        <result column="courseId" jdbcType="INTEGER" property="courseId" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="posttime" jdbcType="VARCHAR" property="posttime" />
+        <result column="commentuid" jdbcType="INTEGER" property="commentuid" />
+        <result column="commenttime" jdbcType="INTEGER" property="commenttime" />
+    </resultMap>
+    <insert id="insert">
+    insert into post_comments(course_id,user_id,ctime,content,comment_id,comment_time)
+    values (#{courseId,jdbcType=INTEGER},
+     #{postuid,jdbcType=INTEGER},
+     #{posttime,jdbcType=VARCHAR},
+     #{content,jdbcType=VARCHAR},
+     #{commentuid,jdbcType=INTEGER},
+     #{commenttime,jdbcType=VARCHAR});
+  </insert>
+    <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select c.course_id, c.user_id, c.ctime, c.content, c.comment_id,c.comment_time
+        from post_comments c
+        where c.ctime=#{posttime,jdbcType=VARCHAR}
+        order by c.ctime asc;
+    </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.post.CoursePostsMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.post.CoursePost">
+        <result column="courseId" jdbcType="INTEGER" property="courseId" />
+        <result column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="ctime" jdbcType="VARCHAR" property="ctime" />
+        <result column="last_ctime" jdbcType="VARCHAR" property="last_ctime" />
+         </resultMap>
+    <insert id="insert">
+    insert into course_posts(course_id,user_id,title,content,ctime)
+    values (#{courseId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{time,jdbcType=VARCHAR});
+  </insert>
+    <select id="get" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select c.course_id, c.user_id, c.title, c.content, c.ctime,c.last_ctime
+        from course_posts c
+        where c.course_id=#{courseId,jdbcType=INTEGER}
+        order by c.ctime asc;
+    </select>
+    <update id="renew">
+        UPDATE course_posts p
+        SET p.last_ctime = #{last_ctime,jdbcType=VARCHAR}
+        where p.ctime = #{ctime,jdbcType=VARCHAR};
+    </update>
+</mapper>

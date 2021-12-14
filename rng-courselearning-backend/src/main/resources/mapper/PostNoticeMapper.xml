@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.seecoder.courselearning.mapperservice.post.PostNoticeMapper">
+    <resultMap id="BaseResultMap" type="cn.seecoder.courselearning.po.post.PostNotice">
+        <result column="senderUid" jdbcType="INTEGER" property="senderUid" />
+        <result column="receiverUid" jdbcType="INTEGER" property="receiverUid" />
+        <result column="sendTime" jdbcType="VARCHAR" property="sendTime" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+    </resultMap>
+    <insert id="insert">
+    insert into post_notices(sender_id,receiver_id,send_time,url)
+    values (#{senderUid,jdbcType=INTEGER},
+     #{receiverUid,jdbcType=INTEGER},
+     #{sendTime,jdbcType=VARCHAR},
+     #{url,jdbcType=VARCHAR});
+  </insert>
+    <select id="get" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select n.sender_id,n.receiver_id,send_time,url
+        from post_notices n
+        where n.receiver_id=#{receiverUid,jdbcType=INTEGER}
+        order by n.send_time desc;
+    </select>
+    <select id="selectByTime" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select n.sender_id,n.receiver_id,send_time,url
+        from post_notices n
+        where n.send_time=#{sendTime,jdbcType=VARCHAR}
+        order by n.send_time desc;
+    </select>
+    <delete id="deleteByTime" parameterType="java.lang.String">
+        delete n from post_notices n
+        where n.send_time=#{sendTime,jdbcType=VARCHAR};
+    </delete>
+</mapper>
